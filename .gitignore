@@ -1,0 +1,11 @@
+train_cnn/venv/
+train_cnn/dataset/
+train_cnn/**pycache**/
+
+*.pyc
+
+train_cnn/pth/modeltemp.pth
+
+.vscode/
+pth/
+*.pth
