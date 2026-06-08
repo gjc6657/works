@@ -9,3 +9,11 @@ train_cnn/pth/modeltemp.pth
 .vscode/
 pth/
 *.pth
+
+ros2_learning/*
+!ros2_learning/ros2_homework_advanced/
+
+ros2_learning/ros2_homework_advanced/*
+!ros2_learning/ros2_homework_advanced/ros2_basic_ws/
+
+!ros2_learning/ros2_homework_advanced/ros2_basic_ws/**
