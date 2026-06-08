@@ -1,0 +1,4 @@
+turtle_circle:
+  ros__parameters:
+    linear_speed: 1.0
+    angular_speed: 1.0

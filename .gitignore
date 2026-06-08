@@ -1,6 +1,6 @@
 train_cnn/venv/
 train_cnn/dataset/
-train_cnn/**pycache**/
+train_cnn/**pycache__/
 
 *.pyc
 
@@ -10,10 +10,6 @@ train_cnn/pth/modeltemp.pth
 pth/
 *.pth
 
-ros2_learning/*
-!ros2_learning/ros2_homework_advanced/
-
-ros2_learning/ros2_homework_advanced/*
-!ros2_learning/ros2_homework_advanced/ros2_basic_ws/
-
-!ros2_learning/ros2_homework_advanced/ros2_basic_ws/**
+ros2_homework_advanced/ros2_basic_ws/build/
+ros2_homework_advanced/ros2_basic_ws/install/
+ros2_homework_advanced/ros2_basic_ws/log/
