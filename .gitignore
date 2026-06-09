@@ -10,6 +10,6 @@ train_cnn/pth/modeltemp.pth
 pth/
 *.pth
 
-ros2_homework_advanced/ros2_basic_ws/build/
-ros2_homework_advanced/ros2_basic_ws/install/
-ros2_homework_advanced/ros2_basic_ws/log/
+build/
+install/
+log/
