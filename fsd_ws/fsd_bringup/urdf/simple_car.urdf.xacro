@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="simple_car">
+  <!-- F1 风格外观（RViz）；传感器坐标与 SDF 一致，base_link = FLU -->
+
+  <material name="f1_red"><color rgba="0.82 0.04 0.08 1"/></material>
+  <material name="carbon"><color rgba="0.06 0.06 0.07 1"/></material>
+  <material name="rubber"><color rgba="0.10 0.10 0.10 1"/></material>
+  <material name="rim"><color rgba="0.78 0.78 0.82 1"/></material>
+  <material name="visor"><color rgba="0.15 0.55 0.85 0.85"/></material>
+
+  <link name="base_link">
+    <!-- 单体壳 -->
+    <visual name="monocoque">
+      <origin xyz="0.02 0 0.09" rpy="0 0 0"/>
+      <geometry><box size="0.88 0.42 0.11"/></geometry>
+      <material name="f1_red"/>
+    </visual>
+    <!-- 鼻锥 -->
+    <visual name="nose">
+      <origin xyz="0.52 0 0.07" rpy="0 0 0"/>
+      <geometry><box size="0.22 0.14 0.07"/></geometry>
+      <material name="f1_red"/>
+    </visual>
+    <!-- 侧箱 -->
+    <visual name="sidepod_l">
+      <origin xyz="-0.05 0.24 0.06" rpy="0 0 0"/>
+      <geometry><box size="0.55 0.16 0.08"/></geometry>
+      <material name="f1_red"/>
+    </visual>
+    <visual name="sidepod_r">
+      <origin xyz="-0.05 -0.24 0.06" rpy="0 0 0"/>
+      <geometry><box size="0.55 0.16 0.08"/></geometry>
+      <material name="f1_red"/>
+    </visual>
+    <!-- 引擎盖 / 尾椎 -->
+    <visual name="engine_cover">
+      <origin xyz="-0.28 0 0.10" rpy="0 0 0"/>
+      <geometry><box size="0.35 0.28 0.06"/></geometry>
+      <material name="f1_red"/>
+    </visual>
+    <!-- 前翼主翼 -->
+    <visual name="front_wing_main">
+      <origin xyz="0.58 0 0.025" rpy="0 0 0"/>
+      <geometry><box size="0.06 0.72 0.015"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <!-- 前翼端板 -->
+    <visual name="front_wing_ep_l">
+      <origin xyz="0.56 0.34 0.05" rpy="0 0 0"/>
+      <geometry><box size="0.04 0.02 0.08"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <visual name="front_wing_ep_r">
+      <origin xyz="0.56 -0.34 0.05" rpy="0 0 0"/>
+      <geometry><box size="0.04 0.02 0.08"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <!-- 后翼 -->
+    <visual name="rear_wing_main">
+      <origin xyz="-0.54 0 0.28" rpy="0 0 0"/>
+      <geometry><box size="0.05 0.68 0.02"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <visual name="rear_wing_ep_l">
+      <origin xyz="-0.52 0.32 0.22" rpy="0 0 0"/>
+      <geometry><box size="0.03 0.02 0.18"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <visual name="rear_wing_ep_r">
+      <origin xyz="-0.52 -0.32 0.22" rpy="0 0 0"/>
+      <geometry><box size="0.03 0.02 0.18"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <!-- Halo -->
+    <visual name="halo">
+      <origin xyz="0.08 0 0.22" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.28" length="0.012"/></geometry>
+      <material name="carbon"/>
+    </visual>
+    <!-- 座舱罩 -->
+    <visual name="cockpit">
+      <origin xyz="0.05 0 0.16" rpy="0 0 0"/>
+      <geometry><box size="0.18 0.22 0.06"/></geometry>
+      <material name="visor"/>
+    </visual>
+  </link>
+
+  <xacro:macro name="f1_wheel" params="prefix x y r length">
+    <link name="${prefix}_wheel">
+      <visual name="tire">
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry><cylinder radius="${r}" length="${length}"/></geometry>
+        <material name="rubber"/>
+      </visual>
+      <visual name="rim_disk">
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry><cylinder radius="${r * 0.55}" length="${length + 0.01}"/></geometry>
+        <material name="rim"/>
+      </visual>
+    </link>
+    <joint name="${prefix}_wheel_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${prefix}_wheel"/>
+      <origin xyz="${x} ${y} ${r}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:f1_wheel prefix="front_left"  x="0.40"  y="0.42"  r="0.13" length="0.10"/>
+  <xacro:f1_wheel prefix="front_right" x="0.40"  y="-0.42" r="0.13" length="0.10"/>
+  <xacro:f1_wheel prefix="left_rear"   x="-0.40" y="0.42"  r="0.17" length="0.12"/>
+  <xacro:f1_wheel prefix="right_rear"  x="-0.40" y="-0.42" r="0.17" length="0.12"/>
+
+  <link name="camera_link">
+    <visual name="camera_housing">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.04 0.06 0.03"/></geometry>
+      <material name="carbon"/>
+    </visual>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0.55 0 0.35" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_optical_frame"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <link name="lidar_link">
+    <visual name="lidar_pod">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.035" length="0.025"/></geometry>
+      <material name="carbon"/>
+    </visual>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.45" rpy="0 0 0"/>
+  </joint>
+
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="gps_link"/>
+  <joint name="gps_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gps_link"/>
+    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+  </joint>
+
+  <link name="magnetometer_link"/>
+  <joint name="magnetometer_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="magnetometer_link"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </joint>
+
+</robot>
